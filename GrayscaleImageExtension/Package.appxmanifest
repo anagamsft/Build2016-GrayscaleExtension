@@ -43,7 +43,11 @@
       </uap:VisualElements>
       <Extensions>
         <uap3:Extension Category="windows.appExtension">
-          <uap3:AppExtension Name="build2016.appextensibility.demo" Id="base" PublicFolder="Public" DisplayName="Grayscale" Description="Grayscale Image" />
+          <uap3:AppExtension Name="build2016.appextensibility.demo" Id="base" PublicFolder="Public" DisplayName="Grayscale" Description="Grayscale Image">
+            <uap3:Properties>
+              <Service>testservicename</Service>
+            </uap3:Properties>
+          </uap3:AppExtension>
         </uap3:Extension>
       </Extensions>
     </Application>
