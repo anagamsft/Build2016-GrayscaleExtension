@@ -37,6 +37,12 @@ namespace GrayscaleService
 
             switch (command)
             {
+                case "Grayscale":
+                    {
+                        string imageString = message["ImageString"] as string;
+                        returnData.Add("ImageString", imageString);
+                        break;
+                    }
                 // load extension is called
                 case "Load":
                     {
