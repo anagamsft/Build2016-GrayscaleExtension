@@ -1,10 +1,7 @@
 ﻿using System;
-using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel.AppService;
 using Windows.ApplicationModel.Background;
 using Windows.Foundation.Collections;
-using Windows.UI.Xaml.Media.Imaging;
 
 namespace GrayscaleService
 {
@@ -46,23 +43,27 @@ namespace GrayscaleService
                 // load extension is called
                 case "Load":
                     {
-                        // do the grayscale conversion
+                        // get byte array in bgra8 format and size of the image
+                        if (message.ContainsKey("Pixels") &&
+                            message.ContainsKey("Height") &&
+                            message.ContainsKey("Width"))
+                        {
+                            byte[] pixels = message["Pixels"] as byte[];
 
-                        // get the image string and strip header
-                        string imageString = message["ImageString"] as string;
-                        //string encodedImage = ImageTools.StripDataURIHeader(message["ImageString"] as string);
+                            // grayscale the byte array, which is in Bgra8 format
+                            for (int i = 0; i < pixels.Length; i += 4)
+                            {
+                                int gscale = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+                                pixels[i] = (byte) gscale;
+                                pixels[i + 1] = (byte) gscale;
+                                pixels[i + 2] = (byte) gscale;
+                            }
 
-                        // decode image into byte array using bitmap decoder
-
-                        // grayscale the byte array
-
-                        // loop through each set of 4 bytes, averaging the first 3 and setting all 3 values to it
-
-                        // encode the byte array back into a PNG string
-
-                        // return the converted string
-                        returnData.Add("ImageString", imageString);
-
+                            // return the modified pixels
+                            returnData.Add("Pixels", pixels);
+                            returnData.Add("Height", message["Height"]);
+                            returnData.Add("Width", message["Width"]);
+                        }
                         break;
                     }
                 default:

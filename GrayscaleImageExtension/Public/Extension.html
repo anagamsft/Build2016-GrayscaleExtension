@@ -21,6 +21,7 @@
 
         function extensionLoad(url) {
             
+            /*
             tempImageStore.src = url;
             inCanvas.height = tempImageStore.height;
             inCanvas.width = tempImageStore.width;
@@ -44,9 +45,11 @@
 
             var sendYourDataUrl = outCanvas.toDataURL();
             console.log("Done");
+            */
 
             // this is the callback
-            window.external.notify(sendYourDataUrl);
+            //window.external.notify(sendYourDataUrl);
+            window.external.notify(url);
         }
     </script>
 </body>
