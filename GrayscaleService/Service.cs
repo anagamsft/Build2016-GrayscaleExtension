@@ -37,9 +37,24 @@ namespace GrayscaleService
 
             switch (command)
             {
-                case "Grayscale":
+                // load extension is called
+                case "Load":
                     {
+                        // do the grayscale conversion
+
+                        // get the image string and strip header
                         string imageString = message["ImageString"] as string;
+                        //string encodedImage = ImageTools.StripDataURIHeader(message["ImageString"] as string);
+
+                        // decode image into byte array using bitmap decoder
+
+                        // grayscale the byte array
+
+                        // loop through each set of 4 bytes, averaging the first 3 and setting all 3 values to it
+
+                        // encode the byte array back into a PNG string
+
+                        // return the converted string
                         returnData.Add("ImageString", imageString);
 
                         break;
