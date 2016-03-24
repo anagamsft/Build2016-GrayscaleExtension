@@ -49,6 +49,10 @@
             </uap3:Properties>
           </uap3:AppExtension>
         </uap3:Extension>
+        <uap:Extension Category="windows.appService"
+            EntryPoint="GrayscaleService.Service">
+          <uap:AppService Name="com.microsoft.grayscaleservice"/>
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
