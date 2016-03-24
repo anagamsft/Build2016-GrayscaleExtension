@@ -45,6 +45,10 @@
         <uap3:Extension Category="windows.appExtension">
           <uap3:AppExtension Name="build2016.appextensibility.demo" Id="base" PublicFolder="Public" DisplayName="Grayscale" Description="Grayscale Image" />
         </uap3:Extension>
+        <uap:Extension Category="windows.appService"
+            EntryPoint="GrayscaleService.Service">
+          <uap:AppService Name="com.microsoft.grayscaleservice"/>
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>
