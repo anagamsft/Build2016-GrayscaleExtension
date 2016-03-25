@@ -24,7 +24,7 @@ namespace GrayscaleService
         private async void OnRequestReceived(AppServiceConnection sender, AppServiceRequestReceivedEventArgs args)
         {
             // Get a deferral because we use an awaitable API below to respond to the message
-            // and we don&#39;t want this call to get cancelled while we are waiting.
+            // and we dont want this call to get cancelled while we are waiting.
             var messageDeferral = args.GetDeferral();
 
             ValueSet message = args.Request.Message;
@@ -52,7 +52,7 @@ namespace GrayscaleService
             }
 
             await args.Request.SendResponseAsync(returnData); // Return the data to the caller.
-            messageDeferral.Complete(); // Complete the deferral so that the platform knows that we&#39;re done responding to the app service call.
+            messageDeferral.Complete(); // Complete the deferral so that the platform knows that we're done responding to the app service call.
         }
 
         private ValueSet GrayscaleByteArray(ValueSet message)
