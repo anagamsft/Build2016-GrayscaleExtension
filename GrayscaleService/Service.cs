@@ -36,34 +36,13 @@ namespace GrayscaleService
             {
                 case "Grayscale":
                     {
-                        string imageString = message["ImageString"] as string;
-                        returnData.Add("ImageString", imageString);
+                        returnData = GrayscaleByteArray(message);   
                         break;
                     }
                 // load extension is called
                 case "Load":
                     {
-                        // get byte array in bgra8 format and size of the image
-                        if (message.ContainsKey("Pixels") &&
-                            message.ContainsKey("Height") &&
-                            message.ContainsKey("Width"))
-                        {
-                            byte[] pixels = message["Pixels"] as byte[];
-
-                            // grayscale the byte array, which is in Bgra8 format
-                            for (int i = 0; i < pixels.Length; i += 4)
-                            {
-                                int gscale = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
-                                pixels[i] = (byte) gscale;
-                                pixels[i + 1] = (byte) gscale;
-                                pixels[i + 2] = (byte) gscale;
-                            }
-
-                            // return the modified pixels
-                            returnData.Add("Pixels", pixels);
-                            returnData.Add("Height", message["Height"]);
-                            returnData.Add("Width", message["Width"]);
-                        }
+                        returnData = GrayscaleByteArray(message);
                         break;
                     }
                 default:
@@ -75,6 +54,36 @@ namespace GrayscaleService
             await args.Request.SendResponseAsync(returnData); // Return the data to the caller.
             messageDeferral.Complete(); // Complete the deferral so that the platform knows that we&#39;re done responding to the app service call.
         }
+
+        private ValueSet GrayscaleByteArray(ValueSet message)
+        {
+            ValueSet returnData = new ValueSet();
+
+            // get byte array in bgra8 format and size of the image
+            if (message.ContainsKey("Pixels") &&
+                message.ContainsKey("Height") &&
+                message.ContainsKey("Width"))
+            {
+                byte[] pixels = message["Pixels"] as byte[];
+
+                // grayscale the byte array, which is in Bgra8 format
+                for (int i = 0; i < pixels.Length; i += 4)
+                {
+                    int gscale = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+                    pixels[i] = (byte)gscale;
+                    pixels[i + 1] = (byte)gscale;
+                    pixels[i + 2] = (byte)gscale;
+                }
+
+                // return the modified pixels
+                returnData.Add("Pixels", pixels);
+                returnData.Add("Height", message["Height"]);
+                returnData.Add("Width", message["Width"]);
+            }
+
+            return returnData;
+        }
+
         private void OnTaskCanceled(IBackgroundTaskInstance sender, BackgroundTaskCancellationReason reason)
         {
             if (this.backgroundTaskDeferral != null)
